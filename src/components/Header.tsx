@@ -8,7 +8,7 @@ export const Header = () => {
       <div className="flex-1 pl-5 text-3xl font-bold">
         {sessionData?.user?.name ? `Notes for ${sessionData.user.name}` : ""}
       </div>
-      <div className="flex-none gap-2">
+      <div className="flex-none">
         <div className="dropdown-end dropdown">
           {sessionData?.user ? (
             <label
