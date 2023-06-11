@@ -2,7 +2,6 @@ import type { Topic } from "@prisma/client";
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import { useState } from "react";
 import { Header } from "~/components/Header";
 import { NoteCard } from "~/components/NoteCard";
