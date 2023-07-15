@@ -11,18 +11,28 @@ export const Header = () => {
       <div className="flex-none">
         <div className="dropdown-end dropdown">
           {sessionData?.user ? (
-            <label
-              tabIndex={0}
-              className="btn-ghost btn-circle avatar btn"
-              onClick={() => void signOut()}
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  src={sessionData.user.image ?? ""}
-                  alt={sessionData.user.name ?? ""}
-                />
-              </div>
-            </label>
+            <>
+              <label
+                tabIndex={0}
+                className="btn-ghost btn-circle avatar btn"
+                // onClick={() => void signOut()}
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    src={sessionData.user.image ?? ""}
+                    alt={sessionData.user.name ?? ""}
+                  />
+                </div>
+              </label>
+              <ul className="dropdown-content menu rounded-box z-[1] w-52 bg-base-100 p-2 text-gray-500 shadow">
+                <li>
+                  <a>Item 1</a>
+                </li>
+                <li>
+                  <button onClick={() => void signOut()}>Logout</button>
+                </li>
+              </ul>
+            </>
           ) : (
             <button
               className="btn-ghost rounded-btn btn"
