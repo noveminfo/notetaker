@@ -2,6 +2,7 @@ import { createTRPCRouter } from "~/server/api/trpc";
 import { exampleRouter } from "~/server/api/routers/example";
 import { topicRouter } from "./routers/topic";
 import { noteRouter } from "./routers/note";
+import { folderRouter } from "./routers/folder";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { noteRouter } from "./routers/note";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
+  folder: folderRouter,
   topic: topicRouter,
   note: noteRouter,
 });

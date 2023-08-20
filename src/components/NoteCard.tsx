@@ -1,44 +1,28 @@
-import type { Note } from "@prisma/client";
-import { format } from "date-fns";
-import { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import type { Note } from '@prisma/client'
+import { format } from 'date-fns'
 
-export const NoteCard = ({
-  note,
-  onDelete,
-}: {
-  note: Note;
-  onDelete: () => void;
-}) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+export const NoteCard = ({ note, onDelete }: { note: Note; onDelete: () => void }) => {
   return (
     <div className="card mt-5 border border-gray-200 bg-base-100 shadow-xl">
-      <div className="card-body m-0 p-3">
-        <div
-          className={`collapse-arrow ${
-            isExpanded ? "collapse-open" : ""
-          } collapse`}
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          <div className="collapse-title">
-            <p className="text-xl font-bold">{note.title}</p>
-            <span className="text-xs text-gray-400">
-              {format(note.updatedAt, "yyyy/M/d")}
-            </span>
-          </div>
-          <div className="collapse-content">
-            <article className="prose">
-              <ReactMarkdown>{note.content}</ReactMarkdown>
-            </article>
-          </div>
-        </div>
-        <div className="card-actions mx-2 justify-end">
-          <button onClick={onDelete} className="btn-warning btn-xs btn px-5">
+      <Box py="10px">
+        <Flex gap="8px" alignItems="baseline">
+          <Text fontSize="2xl" fontWeight="bold">
+            {note.title}
+          </Text>
+          <Text fontSize="12px" color="gray.400">
+            {format(note.updatedAt, 'yyyy/M/d')}
+          </Text>
+          <Button onClick={onDelete} rounded="full" ml="auto">
             Delete
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Flex>
+        {/* {note.content.length < 60 ? ( */}
+        <Text whiteSpace="pre-line">{note.content}</Text>
+        {/* ) : (
+          <Text whiteSpace="pre-line">{note.content.slice(0, 60).concat('...')}</Text>
+        )} */}
+      </Box>
     </div>
-  );
-};
+  )
+}

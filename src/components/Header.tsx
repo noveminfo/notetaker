@@ -1,38 +1,29 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { Avatar } from '@chakra-ui/avatar'
+import { Button } from '@chakra-ui/button'
+import { Flex, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 export const Header = () => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData } = useSession()
 
   return (
-    <div className="navbar bg-primary text-primary-content">
-      <div className="flex-1 pl-5 text-3xl font-bold">
-        {sessionData?.user?.name ? `Notes for ${sessionData.user.name}` : ""}
-      </div>
-      <div className="flex-none">
-        <div className="dropdown-end dropdown">
-          {sessionData?.user ? (
-            <label
-              tabIndex={0}
-              className="btn-ghost btn-circle avatar btn"
-              onClick={() => void signOut()}
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  src={sessionData.user.image ?? ""}
-                  alt={sessionData.user.name ?? ""}
-                />
-              </div>
-            </label>
-          ) : (
-            <button
-              className="btn-ghost rounded-btn btn"
-              onClick={() => void signIn()}
-            >
-              Sign in
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+    <Flex justifyContent="space-between" px="20px" py="10px" alignItems="center" bg="blue.400" fontSize="24px">
+      <Text color="white" fontWeight={600}>
+        {sessionData?.user?.name ? `Notes for ${sessionData.user.name}` : ''}
+      </Text>
+      {sessionData?.user ? (
+        <Menu>
+          <MenuButton>
+            <Avatar name={sessionData.user.name ?? ''} src={sessionData.user.image ?? ''} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem>Download</MenuItem>
+            <MenuItem onClick={() => void signOut()}>Sign out</MenuItem>
+          </MenuList>
+        </Menu>
+      ) : (
+        <Button onClick={() => void signIn()}>Sign in</Button>
+      )}
+    </Flex>
+  )
+}
