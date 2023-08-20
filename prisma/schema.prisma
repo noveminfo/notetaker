@@ -55,7 +55,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    topics        Topic[]
+    // topics        Topic[]
+    folders       Folder[]
 }
 
 model VerificationToken {
@@ -66,13 +67,24 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model Topic {
+model Folder {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     title      String
     user      User     @relation(fields: [userId], references: [id])
     userId    String
+    topics     Topic[]
+}
+
+model Topic {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    title      String
+    // user      User     @relation(fields: [userId], references: [id])
+    folder      Folder  @relation(fields: [folderId], references: [id])
+    folderId    String
     notes     Note[]
 }
 

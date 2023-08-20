@@ -1,54 +1,54 @@
-import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { languages } from "@codemirror/language-data";
-import CodeMirror from "@uiw/react-codemirror";
-import { useState } from "react";
+import { Box, Button, Flex, Input } from '@chakra-ui/react'
+import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
+import { languages } from '@codemirror/language-data'
+import CodeMirror from '@uiw/react-codemirror'
+import { useState } from 'react'
 
 export const NoteEditor = ({
   onSave,
+  onClose,
 }: {
-  onSave: (note: { title: string; content: string }) => void;
+  onSave: (note: { title: string; content: string }) => void
+  onClose: () => void
 }) => {
-  const [code, setCode] = useState("");
-  const [title, setTitle] = useState("");
+  const [code, setCode] = useState('')
+  const [title, setTitle] = useState('')
 
   return (
-    <div className="card mt-5 border border-gray-200 bg-base-100 shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title">
-          <input
-            type="text"
-            placeholder="Note Title"
-            className="input-primary input input-lg w-full font-bold"
-            value={title}
-            onChange={(e) => setTitle(e.currentTarget.value)}
-          />
-        </h2>
+    <Flex flexDirection="column" gap="8px">
+      <Input
+        type="text"
+        fontSize="24px"
+        placeholder="Note Title"
+        value={title}
+        onChange={(e) => setTitle(e.currentTarget.value)}
+      />
+      <Box border="1px">
         <CodeMirror
           value={code}
-          width="500px"
-          height="30vh"
-          minWidth="100%"
-          minHeight="30vh"
-          extensions={[
-            markdown({ base: markdownLanguage, codeLanguages: languages }),
-          ]}
+          width="100%"
+          height="40vh"
+          // minWidth="300px"
+          minHeight="40vh"
+          extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]}
           onChange={(value) => setCode(value)}
-          className="border border-gray-300"
+          // className="border border-gray-300"
         />
-        <div className="card-actions justify-end">
-          <button
-            onClick={() => {
-              onSave({ title, content: code });
-              setCode("");
-              setTitle("");
-            }}
-            className="btn-primary btn"
-            disabled={title.trim() === "" || code.trim() === ""}
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+      </Box>
+      <Button
+        onClick={() => {
+          onSave({ title, content: code })
+          setCode('')
+          setTitle('')
+          onClose()
+        }}
+        bg="blue.400"
+        w="80px"
+        ml="auto"
+        isDisabled={title.trim() === '' || code.trim() === ''}
+      >
+        Save
+      </Button>
+    </Flex>
+  )
+}
